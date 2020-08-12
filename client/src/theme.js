@@ -45,34 +45,40 @@ module.exports = {
 		h3: {
 			fontSize: ['1rem', '2rem'],
 		},
+		cardHeading: {
+			textAlign: 'center',
+			marginBottom: '2rem',
+		},
+		cardText: {
+			textAlign: 'center',
+		},
 	},
 	links: {
-		cardLink: {
-			fontSize: ['1rem', '2rem'],
+		homeLink: {
+			fontSize: ['.5rem', '1rem'],
 			textDecoration: 'none',
 			color: 'primary',
 			transition: 'all .5s ease',
-			marginY: 2,
 			textShadow: '2px 2px 3px #ccb81e',
 			'&:hover': {
-				transform: 'scale(1.3)',
+				transform: 'scale(1.1)',
 				color: 'secondary',
 				textDecoration: 'underline overline',
 			},
 		},
-		navLink: {
+		savedLink: {
 			textTransform: 'uppercase',
 			fontSize: [0, 1],
-			color: 'primary',
+			padding: '0 1rem',
+			color: 'accent',
 			transition: 'all .2s ease-in',
 			textShadow: '3px 2px 4px rgba(234,176,243,1)',
 			cursor: 'pointer',
 			textDecoration: 'none',
+			textAlign: 'center',
+
 			'&:hover': {
-				color: 'secondary',
-			},
-			'&:active': {
-				color: 'accent',
+				color: 'danger',
 			},
 		},
 	},
@@ -92,15 +98,24 @@ module.exports = {
 	},
 	cards: {
 		primary: {
-			backgroundColor: 'muted',
-			color: 'text',
+			backgroundColor: 'secondary',
+			color: 'muted',
 			display: 'flex',
-			flexDirection: 'column',
+			flexDirection: ['column', null, 'row'],
 			alignItems: 'center',
-			marginY: '1rem',
-			paddingY: '1rem',
+			width: '90%',
+			margin: '1rem auto',
+			padding: '1.5rem',
 			fontSize: [1, 2, 3],
 			textDecoration: 'none',
+			cursor: 'pointer',
+			borderRadius: '.5rem',
+			border: '1px solid black',
+			transition: 'all .4s linear',
+
+			'&:hover': {
+				transform: 'scale(1.02)',
+			},
 		},
 	},
 	layout: {
@@ -114,7 +129,27 @@ module.exports = {
 			paddingBottom: ['50px', '75px', '125px', '150px'],
 		},
 	},
-	variants: {},
+	buttons: {
+		primary: {
+			fontSize: '2rem',
+			bg: 'primary',
+			padding: '.25rem .75rem',
+			borderRadius: '10px',
+			verticalAlign: 'center',
+			display: 'flex',
+			alignItems: 'center',
+			boxShadow: '10px 10px 10px -7px rgba(0,0,0,0.49)',
+			cursor: 'pointer',
+		},
+	},
+	variants: {
+		cardInfo: {
+			flexDirection: 'column',
+			alignItems: 'center',
+			justifyContent: 'space-around',
+			width: '100%',
+		},
+	},
 	forms: {
 		label: {
 			fontSize: [2, null, 3],

@@ -1,20 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Button, Label, Input, Flex } from 'theme-ui';
-import { useParams, useHistory } from 'react-router-dom';
-import axios from 'axios';
 
-export default function UpdateMovieForm() {
-	const initialState = {
-		title: '',
-		director: '',
-		metascore: '',
-		stars: [],
-	};
-
-	const [movie, setMovie] = useState(initialState);
-	const { id } = useParams();
-	const history = useHistory();
-
+export default function Form({ handleSubmit, movie, setMovie }) {
 	const handleChange = (e) => {
 		e.persist();
 		setMovie({ ...movie, [e.target.name]: e.target.value });
@@ -24,26 +11,6 @@ export default function UpdateMovieForm() {
 		e.persist();
 		setMovie({ ...movie, stars: e.target.value.split(',') });
 	};
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		axios
-			.put(`http://localhost:5000/api/movies/${id}`, movie)
-			.then((res) => {
-				console.log('result', res.data);
-				history.push(`/movies/${id}`);
-			})
-			.catch((err) => {
-				console.log('error', err);
-			});
-	};
-
-	useEffect(() => {
-		axios.get(`http://localhost:5000/api/movies/${id}`).then((res) => {
-			setMovie({ ...res.data });
-		});
-	}, []);
-
 	return (
 		<Flex
 			onSubmit={handleSubmit}
@@ -108,9 +75,6 @@ export default function UpdateMovieForm() {
 					},
 					'&:active:': {
 						boxShadow: 'none',
-					},
-					'&:disabled': {
-						bg: 'gray',
 					},
 				}}
 			>

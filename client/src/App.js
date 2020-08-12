@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Route, useHistory } from 'react-router-dom';
+import { Route, useHistory, Switch } from 'react-router-dom';
 import SavedList from './Movies/SavedList';
 import MovieList from './Movies/MovieList';
 import Movie from './Movies/Movie';
 import axios from 'axios';
 import { Container } from 'theme-ui';
-import UpdateMovieForm from './Movies/UpdateMovieForm';
+import UpdateMovie from './Movies/UpdateMovie';
+import AddMovie from './Movies/AddMovie';
 
 const App = () => {
 	const [savedList, setSavedList] = useState([]);
 	const [movieList, setMovieList] = useState([]);
-	const history = useHistory();
 
 	const getMovieList = () => {
 		axios
@@ -19,15 +19,12 @@ const App = () => {
 			.catch((err) => console.log(err.response));
 	};
 
-	const deleteMovie = (id) => {
-		axios.delete(`http://localhost:5000/api/movies/${id}`).then((res) => {
-			console.log(res);
-			history.push('/');
-		});
-	};
-
+	// Fixed addToSavedList func so movie can only be added once
 	const addToSavedList = (movie) => {
-		setSavedList([...savedList, movie]);
+		const saved = savedList.filter((saved) => saved.id === movie.id);
+		if (saved.length === 0) {
+			setSavedList([...savedList, movie]);
+		}
 	};
 
 	useEffect(() => {
@@ -35,20 +32,28 @@ const App = () => {
 	});
 
 	return (
-		<Container>
+		<React.Fragment>
 			<SavedList list={savedList} />
+			<Container>
+				<Switch>
+					<Route exact path='/'>
+						<MovieList movies={movieList} />
+					</Route>
 
-			<Route exact path='/'>
-				<MovieList movies={movieList} />
-			</Route>
+					<Route path='/movies/:id'>
+						<Movie addToSavedList={addToSavedList} />
+					</Route>
 
-			<Route path='/movies/:id'>
-				<Movie addToSavedList={addToSavedList} deleteMovie={deleteMovie} />
-			</Route>
-			<Route path='/update-movie/:id'>
-				<UpdateMovieForm />
-			</Route>
-		</Container>
+					<Route path='/update-movie/:id'>
+						<UpdateMovie />
+					</Route>
+
+					<Route path='/add-movie'>
+						<AddMovie />
+					</Route>
+				</Switch>
+			</Container>
+		</React.Fragment>
 	);
 };
 
