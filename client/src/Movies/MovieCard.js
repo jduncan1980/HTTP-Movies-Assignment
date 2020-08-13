@@ -1,25 +1,28 @@
-import React from 'react';
+/** @jsx jsx */
+// import React from 'react';
+import { jsx, Card, Text, Heading, Flex } from 'theme-ui';
 
-const MovieCard = props => {
-  const { title, director, metascore, stars } = props.movie;
-  return (
-    <div className="movie-card">
-      <h2>{title}</h2>
-      <div className="movie-director">
-        Director: <em>{director}</em>
-      </div>
-      <div className="movie-metascore">
-        Metascore: <strong>{metascore}</strong>
-      </div>
-      <h3>Actors</h3>
-
-      {stars.map(star => (
-        <div key={star} className="movie-star">
-          {star}
-        </div>
-      ))}
-    </div>
-  );
+const MovieCard = (props) => {
+	const { title, director, metascore, stars } = props.movie;
+	return (
+		<Card sx={{ position: 'relative' }}>
+			<Flex variant='cardInfo'>
+				<Heading variant='cardHeading'>{title}</Heading>
+				<Text variant='cardText'>
+					Directed by <em>{director}</em>
+				</Text>
+				<Text variant='cardText'>
+					Metascore: <strong>{metascore}</strong>
+				</Text>
+			</Flex>
+			<Flex variant='cardInfo' sx={{ marginTop: ['1rem', null, 0] }}>
+				<Heading variant='cardHeading'>Starring:</Heading>
+				{stars.map((star) => (
+					<Text key={star}>{star}</Text>
+				))}
+			</Flex>
+		</Card>
+	);
 };
 
 export default MovieCard;
